@@ -1,0 +1,30 @@
+name: Deploy to Cloudflare Pages
+
+# When should this pipeline run?
+on:
+  push:
+    branches: [main]      # every push to main -> deploy
+  pull_request:           # PRs get a preview deployment
+  workflow_dispatch:      # lets you run it manually from the Actions tab
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+
+    steps:
+      # 1. Get the repository files onto the runner
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. (Build step would go here for React/Vite/etc. Plain HTML needs none.)
+
+      # 3. Upload the site to Cloudflare Pages
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy public --project-name=hello-world-github
