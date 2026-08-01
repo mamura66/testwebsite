@@ -1,0 +1,20 @@
+{
+  // Matches the Worker name in the Cloudflare dashboard.
+  "name": "testwebsite",
+
+  // Pins runtime behaviour to this date so future platform
+  // changes can't silently alter how the site behaves.
+  "compatibility_date": "2026-08-01",
+  "compatibility_flags": ["nodejs_compat"],
+
+  // Turns on logs/metrics for the Worker in the dashboard.
+  "observability": {
+    "enabled": true
+  },
+
+  // The folder to publish. This is the line that fixes preview builds:
+  // `wrangler deploy` could guess it, `wrangler versions upload` cannot.
+  "assets": {
+    "directory": "public"
+  }
+}
